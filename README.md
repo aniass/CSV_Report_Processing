@@ -2,8 +2,7 @@
 
 
 ## General info
-This Python script allows one to read a CSV file entered by the user, it changes the data contained in and returns the transformed
-data as a new CSV one. 
+This Python script allows to read a CSV file entered by the user, changes the data contained in it and returns the transformed data as a new CSV one.
 
 ## Technologies
 Project is created with:
