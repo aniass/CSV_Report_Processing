@@ -13,6 +13,7 @@ def country_code(country):
     except LookupError:
         return 'XXX'
 
+
 def change_date(other_date):
     """Function that changes the date format."""
     old_format = time.strptime(other_date, '%m/%d/%Y')
@@ -27,23 +28,29 @@ def number_of_clicks(impression, ctr):
     return number_clicks
 
 
-try:
-    with open('report.csv', 'r', encoding='utf-8', newline='') as csv_file:
-        reader = csv.reader(csv_file, delimiter=",")
-        rows = [row for i, row in enumerate(reader) if i > 0]
-except csv.Error as e:
-    sys.exit('file {}, line {}: {}'.format('report.csv', reader.line_num, e))
+def main():
+    try:
+        with open('report.csv', 'r', encoding='utf-8', newline='') as csv_file:
+            reader = csv.reader(csv_file, delimiter=",")
+            rows = [row for i, row in enumerate(reader) if i > 0]
+    except csv.Error as e:
+        sys.exit('file {}, line {}: {}'.format('report.csv', reader.line_num, e))
 
-results = []
-for row in rows:
-    row[0] = change_date(row[0])
-    row[1] = country_code(row[1])
-    row[3] = number_of_clicks(row[2], row[3])
-    results.append(row)
+    results = []
+    for row in rows:
+        row[0] = change_date(row[0])
+        row[1] = country_code(row[1])
+        row[3] = number_of_clicks(row[2], row[3])
+        results.append(row)
 
-headers = ['date', 'country code', 'number of impressions', 'number of clicks']
-with open('output.csv','w', newline='', encoding='utf-8') as out_file:
-     writer = csv.writer(out_file, delimiter=",")
-     writer.writerow(headers)
-     for result in results:
-         writer.writerow(result)
+    headers = ['date', 'country code', 'number of impressions', 'number of clicks']
+    with open('output.csv','w', newline='', encoding='utf-8') as out_file:
+        writer = csv.writer(out_file, delimiter=",")
+        writer.writerow(headers)
+        for result in results:
+            writer.writerow(result)
+         
+
+if __name__ == '__main__':
+    main()
+    
