@@ -1,4 +1,4 @@
-# CSV_Report_Processing
+# CSV Report Processing
 
 
 ## General info
@@ -7,9 +7,7 @@ This Python script allows to read a CSV file entered by the user, changes the da
 ## Technologies
 Project is created with:
 - Python 3.6
-
-Additional library: 
-* pycountry
+- libraries: pycountry, sys, csv, time.
 
 ## Setup
 To run this project, install it locally using for example:
