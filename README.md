@@ -4,6 +4,10 @@
 ### General info
 The project contains a simple pipeline allows to transformed data using Python. This script let to read a CSV file entered by the user, changes the data contained in it and returns the transformed data as a new CSV one.
 
+### Project includes:
+- Report processing script - **CSV_report2.py**
+- report.csv, output.csv  - data used in the project.
+
 ### Technologies
 Project is created with:
 - Python 3.6
