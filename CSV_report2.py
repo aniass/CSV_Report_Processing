@@ -4,7 +4,7 @@ import pycountry
 import time
 
 
-def country_code(country):
+def find_country_code(country):
     """Function that finds country code for the region"""
     try:
         region = pycountry.subdivisions.lookup(country).country_code
@@ -14,21 +14,21 @@ def country_code(country):
         return 'XXX'
 
 
-def change_date(other_date):
+def format_date(other_date):
     """Function that changes the date format."""
     old_format = time.strptime(other_date, '%m/%d/%Y')
-    date = time.strftime('%Y-%m-%d', old_format)
-    return date
+    formatted_date = time.strftime('%Y-%m-%d', old_format)
+    return formatted_date
 
 
-def number_of_clicks(impression, ctr):
+def calculate_clicks(impression, ctr):
     """Calculation the number of clicks from number of impressions and CTR rate"""
-    percent = float(ctr[:-1])
-    number_clicks = round(float(impression) * percent / 100)
+    ctr_percent = float(ctr[:-1])
+    number_clicks = round(float(impression) * ctr_percent / 100)
     return number_clicks
 
 
-def main():
+def process_data(input_file, output_file):
     try:
         with open('report.csv', 'r', encoding='utf-8', newline='') as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
@@ -38,9 +38,9 @@ def main():
 
     results = []
     for row in rows:
-        row[0] = change_date(row[0])
+        row[0] = format_date(row[0])
         row[1] = country_code(row[1])
-        row[3] = number_of_clicks(row[2], row[3])
+        row[3] = calculate_clicks((row[2], row[3])
         results.append(row)
 
     headers = ['date', 'country code', 'number of impressions', 'number of clicks']
@@ -52,5 +52,5 @@ def main():
          
 
 if __name__ == '__main__':
-    main()
+    process_data()
     
