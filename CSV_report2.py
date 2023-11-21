@@ -30,27 +30,28 @@ def calculate_clicks(impression, ctr):
 
 def process_data(input_file, output_file):
     try:
-        with open('report.csv', 'r', encoding='utf-8', newline='') as csv_file:
+        with open(input_file, 'r', encoding='utf-8', newline='') as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
-            rows = [row for i, row in enumerate(reader) if i > 0]
+            next(reader)  # Skip header row
+            
+            results = []
+            for row in reader:
+                formatted_date = format_date(row[0])
+                country_code = find_country_code(row[1])
+                clicks = calculate_clicks(row[2], row[3])
+                results.append([formatted_date, country_code, row[2], clicks])
+
+        headers = ['date', 'country code', 'number of impressions', 'number of clicks']
+        with open(output_file, 'w', newline='', encoding='utf-8') as out_file:
+            writer = csv.writer(out_file, delimiter=",")
+            writer.writerow(headers)
+            writer.writerows(results)
     except csv.Error as e:
-        sys.exit('file {}, line {}: {}'.format('report.csv', reader.line_num, e))
-
-    results = []
-    for row in rows:
-        row[0] = format_date(row[0])
-        row[1] = country_code(row[1])
-        row[3] = calculate_clicks((row[2], row[3])
-        results.append(row)
-
-    headers = ['date', 'country code', 'number of impressions', 'number of clicks']
-    with open('output.csv','w', newline='', encoding='utf-8') as out_file:
-        writer = csv.writer(out_file, delimiter=",")
-        writer.writerow(headers)
-        for result in results:
-            writer.writerow(result)
+        sys.exit('File {}, line {}: {}'.format(input_file, reader.line_num, e))
+        
          
-
 if __name__ == '__main__':
-    process_data()
-    
+    input_file = 'report.csv'
+    output_file = 'output.csv'
+    process_data(input_file, output_file)
+ 
