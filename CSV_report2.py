@@ -5,7 +5,10 @@ import time
 
 
 def find_country_code(country):
-    """Function that finds country code for the region"""
+    """
+    Function that finds the country code for the region.
+    If the country code is not found it returns 'XXX'.
+    """
     try:
         region = pycountry.subdivisions.lookup(country).country_code
         region_two = pycountry.countries.lookup(region).alpha_3
@@ -15,14 +18,18 @@ def find_country_code(country):
 
 
 def format_date(other_date):
-    """Function that changes the date format."""
+    """
+    Function that changes the date format from 'mm/dd/yyyy' to 'yyyy-mm-dd'.
+    """
     old_format = time.strptime(other_date, '%m/%d/%Y')
     formatted_date = time.strftime('%Y-%m-%d', old_format)
     return formatted_date
 
 
 def calculate_clicks(impression, ctr):
-    """Calculation the number of clicks from number of impressions and CTR rate"""
+    """
+    Function that calculates the number of clicks from the number of impressions and CTR rate.
+    """
     ctr_percent = float(ctr[:-1])
     number_clicks = round(float(impression) * ctr_percent / 100)
     return number_clicks
