@@ -30,8 +30,8 @@ def calculate_clicks(impression, ctr):
     """
     Function that calculates the number of clicks from the number of impressions and CTR rate.
     """
-    ctr_percent = float(ctr[:-1])
-    number_clicks = round(float(impression) * ctr_percent / 100)
+    ctr_percent = float(ctr.rstrip('%'))
+    number_clicks = round(float(impression) * ctr_percent / 100.0)
     return number_clicks
 
 
