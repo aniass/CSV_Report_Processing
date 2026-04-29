@@ -4,7 +4,7 @@ import pycountry
 import time
 
 
-def find_country_code(country):
+def find_country_code(country: str) -> str:
     """
     Function that finds the country code for the region.
     If the country code is not found it returns 'XXX'.
@@ -17,7 +17,7 @@ def find_country_code(country):
         return 'XXX'
 
 
-def format_date(other_date):
+def format_date(other_date: str) -> str:
     """
     Function that changes the date format from 'mm/dd/yyyy' to 'yyyy-mm-dd'.
     """
@@ -26,13 +26,13 @@ def format_date(other_date):
     return formatted_date
 
 
-def calculate_clicks(impression, ctr):
+def calculate_clicks(impression: str, ctr: str) -> int:
     """
     Function that calculates the number of clicks from the number of impressions and CTR rate.
     """
     ctr_percent = float(ctr.rstrip('%'))
     number_clicks = round(float(impression) * ctr_percent / 100.0)
-    return number_clicks
+    return int(number_clicks)
 
 
 def process_data(input_file, output_file):
