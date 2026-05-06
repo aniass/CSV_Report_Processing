@@ -2,6 +2,7 @@ import csv
 import sys
 import pycountry
 import time
+from pathlib import Path
 
 
 def find_country_code(country: str) -> str:
@@ -35,30 +36,43 @@ def calculate_clicks(impression: str, ctr: str) -> int:
     return int(number_clicks)
 
 
-def process_data(input_file, output_file):
+def process_data(input_path:Path, output_path:Path)-> None:
     try:
-        with open(input_file, 'r', encoding='utf-8', newline='') as csv_file:
+        with input_path.open('r', encoding='utf-8', newline='') as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
             next(reader)  # Skip header row
             
             results = []
             for row in reader:
+                if len(row) < 4:
+                    continue # Skip malformed rows
+
                 formatted_date = format_date(row[0])
                 country_code = find_country_code(row[1])
                 clicks = calculate_clicks(row[2], row[3])
                 results.append([formatted_date, country_code, row[2], clicks])
 
         headers = ['date', 'country code', 'number of impressions', 'number of clicks']
-        with open(output_file, 'w', newline='', encoding='utf-8') as out_file:
+        with output_path.open('w', newline='', encoding='utf-8') as out_file:
             writer = csv.writer(out_file, delimiter=",")
             writer.writerow(headers)
             writer.writerows(results)
+
+    except FileNotFoundError as e:
+        sys.exit(f'Input file not found: {e}')
     except csv.Error as e:
-        sys.exit('File {}, line {}: {}'.format(input_file, reader.line_num, e))
+        sys.exit(f'CSV error: {e}')
+    except Exception as e:
+        sys.exit(f'Unexpected error: {e}')
+        
+
+def main():
+    input_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('report.csv')
+    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path('output.csv')
+    process_data(input_path, output_path) 
         
          
 if __name__ == '__main__':
-    input_file = 'report.csv'
-    output_file = 'output.csv'
-    process_data(input_file, output_file)
+    main()
+
  
