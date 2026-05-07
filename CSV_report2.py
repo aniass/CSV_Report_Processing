@@ -7,8 +7,8 @@ from pathlib import Path
 
 def find_country_code(country: str) -> str:
     """
-    Function that finds the country code for the region.
-    If the country code is not found it returns 'XXX'.
+    Find the country code for a given country/region name.
+    If not found, returns 'XXX'.
     """
     try:
         region = pycountry.subdivisions.lookup(country).country_code
@@ -20,7 +20,7 @@ def find_country_code(country: str) -> str:
 
 def format_date(other_date: str) -> str:
     """
-    Function that changes the date format from 'mm/dd/yyyy' to 'yyyy-mm-dd'.
+    Convert date format from 'mm/dd/YYYY' to 'YYYY-mm-dd'.
     """
     old_format = time.strptime(other_date, '%m/%d/%Y')
     formatted_date = time.strftime('%Y-%m-%d', old_format)
@@ -29,7 +29,7 @@ def format_date(other_date: str) -> str:
 
 def calculate_clicks(impression: str, ctr: str) -> int:
     """
-    Function that calculates the number of clicks from the number of impressions and CTR rate.
+    Calculate number of clicks from the number of impressions and CTR rate.
     """
     ctr_percent = float(ctr.rstrip('%'))
     number_clicks = round(float(impression) * ctr_percent / 100.0)
@@ -37,6 +37,11 @@ def calculate_clicks(impression: str, ctr: str) -> int:
 
 
 def process_data(input_path:Path, output_path:Path)-> None:
+    """
+    Read input CSV, transform data, and write to output CSV.
+    Expected input columns: date (mm/dd/YYYY), country, impressions, ctr
+    Output columns: date, country code, number of impressions, number of clicks
+    """
     try:
         with input_path.open('r', encoding='utf-8', newline='') as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
@@ -67,6 +72,10 @@ def process_data(input_path:Path, output_path:Path)-> None:
         
 
 def main():
+    """
+    Entry point. Supports optional CLI arguments for input/output paths.
+    Usage: python script.py [input.csv] [output.csv]
+    """
     input_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('report.csv')
     output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path('output.csv')
     process_data(input_path, output_path) 
