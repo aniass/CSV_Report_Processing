@@ -1,9 +1,8 @@
 import csv
 import sys
-import pycountry
 import time
 from pathlib import Path
-
+import pycountry
 
 def find_country_code(country: str) -> str:
     """
@@ -39,8 +38,8 @@ def calculate_clicks(impression: str, ctr: str) -> int:
 def process_data(input_path:Path, output_path:Path)-> None:
     """
     Read input CSV, transform data, and write to output CSV.
-    Expected input columns: date (mm/dd/YYYY), country, impressions, ctr
-    Output columns: date, country code, number of impressions, number of clicks
+    Expected input columns: date (mm/dd/YYYY), country, impressions, ctr.
+    Output columns: date, country code, number of impressions, number of clicks.
     """
     try:
         with input_path.open('r', encoding='utf-8', newline='') as csv_file:
@@ -74,7 +73,7 @@ def process_data(input_path:Path, output_path:Path)-> None:
 def main():
     """
     Entry point. Supports optional CLI arguments for input/output paths.
-    Usage: python script.py [input.csv] [output.csv]
+    Usage: python script.py [input.csv] [output.csv].
     """
     input_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('report.csv')
     output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path('output.csv')
