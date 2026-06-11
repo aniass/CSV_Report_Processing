@@ -7,11 +7,13 @@ The project contains a simple pipeline allows to transformed data using Python. 
 ### Project includes:
 - Report processing script - **CSV_report2.py**
 - report.csv, output.csv  - data used in the project.
+- tests for project - **tests/test_pipeline.py**
+- requirements - requirements.txt.
 
 ### Technologies
 Project is created with:
 - Python 3.6
-- libraries: pycountry, sys, csv, time.
+- libraries: pycountry, sys, csv, pytest. 
 
 ### Setup
 To run this project, install it locally using for example:
