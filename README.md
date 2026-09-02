@@ -21,10 +21,11 @@ To run this project, install it locally using for example:
 ```
 pip install pycountry
 ```
-You can run the script in the terminal:
+You can run the scripts in the terminal:
 
 ```
 CSV_report2.py
+test_pipeline.py
 ```
 
 To check the operation of the script, you can use the example of a CSV file "report.csv" added to the project. 
